@@ -4,12 +4,13 @@ from jacobi import JacobiMethod
 
 def setup():
     try:
+        print('\n--- Jacobi Iterative Solver 🚀 ---\n')
         number_of_variables = int(input('\nEnter the number of variables (at least 2): '))
 
         if number_of_variables < 2:
-            print('There must be at least two variables. 😛')
-            raise ValueError('The equation must contain at least 2 variables. 😛')
-
+            print('There must be at least two variables. 😎')
+            raise ValueError('The equation must contain at least 2 variables. 😎')
+ 
         print('\nYour system looks like this:')
         for i in range(number_of_variables):
             for j in range(number_of_variables):
@@ -52,8 +53,8 @@ def main():
 try:
     main()
 except KeyboardInterrupt:
-    print('\n--- Sorry to see you go 🚀 ---\n')
-    sys.exit(0)
+    print('\n--- Sad to see you go 😞 ---\n')  
 except ZeroDivisionError:
     print('Sorry! Division by zero witnessed 😢')
+finally:
     sys.exit(0)

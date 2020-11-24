@@ -4,13 +4,36 @@ from prettytable import PrettyTable
 table = PrettyTable()
 
 class JacobiMethod:
-    def __init__(self, coeff_matrix, const_vector, initial=None, tolerance=0.00005):
+    def __init__(self, coeff_matrix, const_vector, initial=None, upper_limiting_error=0.00005):
         self.coeff_matrix = coeff_matrix
         self.const_vector = const_vector
         self.solution = initial or [0 for _ in self.const_vector]
-        self.tolerance = tolerance
+        self.upper_limiting_error = upper_limiting_error
+
+    def is_diag_dominant(self): 
+        n = len(self.solution)
+
+        for i in range(n):
+            _sum = 0
+            for j in range(n):
+                _sum = _sum + abs(self.coeff_matrix[i][j])
+    
+            _sum = _sum - abs(self.coeff_matrix[i][i])
+    
+            if (abs(self.coeff_matrix[i][i]) < _sum):
+                return False
+    
+        return True
+    
+    def handle_not_diag_dominant(self):   
+        # Requires Implementation 
+        print("Sorry! the system of equation is not diagonally dominant.")
 
     def calculate(self):
+        if not self.is_diag_dominant():
+            self.handle_not_diag_dominant()
+            return
+
         n = len(self.solution)
         x_new = [0 for i in self.solution]
 
@@ -30,7 +53,7 @@ class JacobiMethod:
                         _sum += self.const_vector[i]
                 x_new[i] = _sum / self.coeff_matrix[i][i]
 
-            if max(abs(np.array(self.solution)-np.array(x_new))) < self.tolerance:
+            if max(abs(np.array(self.solution)-np.array(x_new))) < self.upper_limiting_error:
                 break
 
             self.solution = [round(x, 5) for x in x_new]
