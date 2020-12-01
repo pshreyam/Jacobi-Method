@@ -11,7 +11,7 @@ def setup():
             print('There must be at least two variables. 😎')
             raise ValueError('The equation must contain at least 2 variables. 😎')
  
-        print('\nYour system looks like this:')
+        print('\nFormat of your system of equations:')
         for i in range(number_of_variables):
             for j in range(number_of_variables):
                 print(f"a_{i+1}_{j+1} * x{j+1}", end="")
@@ -53,7 +53,7 @@ def main():
 try:
     main()
 except KeyboardInterrupt:
-    print('\n--- Sad to see you go 😞 ---\n')  
+    print('\n--- Program Terminated! Sad to see you go 😞 ---\n')  
 except ZeroDivisionError:
     print('Sorry! Division by zero witnessed 😢')
 finally:
