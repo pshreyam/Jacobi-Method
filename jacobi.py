@@ -16,9 +16,8 @@ class JacobiMethod:
         for i in range(n):
             _sum = 0
             for j in range(n):
-                _sum = _sum + abs(self.coeff_matrix[i][j])
-    
-            _sum = _sum - abs(self.coeff_matrix[i][i])
+                if not i==j:
+                     _sum = _sum + abs(self.coeff_matrix[i][j])
     
             if (abs(self.coeff_matrix[i][i]) < _sum):
                 return False
@@ -35,7 +34,7 @@ class JacobiMethod:
             return
 
         n = len(self.solution)
-        x_new = [0 for i in self.solution]
+        x_new = [0 for _ in self.solution]
 
         table.title = "Iteration Table"
         table.field_names = ['n', *[f'x{i}' for i in range(1, n+1)]]
@@ -49,8 +48,7 @@ class JacobiMethod:
                 for j in range(n):
                     if not i == j:
                         _sum -= self.coeff_matrix[i][j] * self.solution[j]
-                    else:
-                        _sum += self.const_vector[i]
+                _sum += self.const_vector[i]
                 x_new[i] = _sum / self.coeff_matrix[i][i]
 
             if max(abs(np.array(self.solution)-np.array(x_new))) < self.upper_limiting_error:
