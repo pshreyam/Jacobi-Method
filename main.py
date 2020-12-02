@@ -48,7 +48,12 @@ def get_user_input(number_of_variables):
     return M, N
 
 def main():
-    jm = JacobiMethod(*get_user_input(setup()))
+    n = setup()
+    A, b = get_user_input(n)
+    acc = int(input("Enter the number of decimal digits for accuracy: "))
+    print("\nEnter initial guess (Defaults to 0):")
+    ini_guess = [float(input(f"x{i+1}: ") or 0) for i in range(n)]
+    jm = JacobiMethod(A, b, ini_guess, acc)
     jm.calculate()
 try:
     main()

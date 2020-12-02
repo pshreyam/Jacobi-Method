@@ -4,11 +4,12 @@ from prettytable import PrettyTable
 table = PrettyTable()
 
 class JacobiMethod:
-    def __init__(self, coeff_matrix, const_vector, initial=None, upper_limiting_error=0.00005):
+    def __init__(self, coeff_matrix, const_vector, initial=None, accuracy=4):
         self.coeff_matrix = coeff_matrix
         self.const_vector = const_vector
         self.solution = initial or [0 for _ in self.const_vector]
-        self.upper_limiting_error = upper_limiting_error
+        self.accuracy = accuracy
+        self.upper_limiting_error = (1/2) * (10 ** -self.accuracy)
 
     def is_diag_dominant(self): 
         n = len(self.solution)
@@ -41,7 +42,7 @@ class JacobiMethod:
 
         iteration = 1
         while True:
-            table.add_row([iteration, *[f'{value:.5f}' for value in self.solution]])
+            table.add_row([iteration, *[f'{value:.{self.accuracy+1}f}' for value in self.solution]])
 
             for i in range(n):
                 _sum = 0
@@ -52,14 +53,14 @@ class JacobiMethod:
                 x_new[i] = _sum / self.coeff_matrix[i][i]
 
             if max(abs(np.array(self.solution)-np.array(x_new))) < self.upper_limiting_error:
-                table.add_row([iteration+1, *[f'{value:.5f}' for value in x_new]])
+                table.add_row([iteration+1, *[f'{value:.{self.accuracy+1}f}' for value in x_new]])
                 break
 
-            self.solution = [round(x, 5) for x in x_new]
+            self.solution = [round(x, self.accuracy+1) for x in x_new]
             iteration += 1
 
         print(table)
-        print('\n Required Root : ', [f'{round(value,4):.4f}' for value in x_new])
+        print('\nRequired Root : ', [f'{round(value, self.accuracy):.{self.accuracy}f}' for value in x_new])
 # A = [[2, -1, 0],
 #      [-1, 3, -1],
 #      [0, -1, 2]]
