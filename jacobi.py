@@ -52,14 +52,14 @@ class JacobiMethod:
                 x_new[i] = _sum / self.coeff_matrix[i][i]
 
             if max(abs(np.array(self.solution)-np.array(x_new))) < self.upper_limiting_error:
+                table.add_row([iteration+1, *[f'{value:.5f}' for value in x_new]])
                 break
 
             self.solution = [round(x, 5) for x in x_new]
             iteration += 1
 
         print(table)
-
-
+        print('\n Required Root : ', [f'{round(value,4):.4f}' for value in x_new])
 # A = [[2, -1, 0],
 #      [-1, 3, -1],
 #      [0, -1, 2]]
