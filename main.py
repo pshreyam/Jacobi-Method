@@ -8,8 +8,8 @@ def setup():
         number_of_variables = int(input('\nEnter the number of variables (at least 2): '))
 
         if number_of_variables < 2:
-            print('There must be at least two variables. 😎')
-            raise ValueError('The equation must contain at least 2 variables. 😎')
+            print('There must be at least two variables.')
+            raise ValueError('The equation must contain at least 2 variables.')
  
         print('\nFormat of your system of equations:')
         for i in range(number_of_variables):
@@ -55,11 +55,12 @@ def main():
     ini_guess = [float(input(f"x{i+1}: ") or 0) for i in range(n)]
     jm = JacobiMethod(A, b, ini_guess, acc)
     jm.calculate()
+
 try:
     main()
 except KeyboardInterrupt:
-    print('\n--- Program Terminated! Sad to see you go 😞 ---\n')  
+    print('\n--- Program Terminated! Sad to see you go ---\n')  
 except ZeroDivisionError:
-    print('Sorry! Division by zero witnessed 😢')
+    print('Sorry! Division by zero witnessed')
 finally:
     sys.exit(0)

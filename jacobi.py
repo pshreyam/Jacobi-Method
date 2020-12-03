@@ -8,6 +8,7 @@ class JacobiMethod:
         self.coeff_matrix = coeff_matrix
         self.const_vector = const_vector
         self.solution = initial or [0 for _ in self.const_vector]
+        print(self.solution)
         self.accuracy = accuracy
         self.upper_limiting_error = (1/2) * (10 ** -self.accuracy)
 
@@ -25,13 +26,9 @@ class JacobiMethod:
     
         return True
     
-    def handle_not_diag_dominant(self):   
-        # Requires Implementation 
-        print("Sorry! the system of equation is not diagonally dominant.")
-
     def calculate(self):
         if not self.is_diag_dominant():
-            self.handle_not_diag_dominant()
+            print("Sorry! the system of equation is not diagonally dominant.")
             return
 
         n = len(self.solution)
@@ -42,7 +39,7 @@ class JacobiMethod:
 
         iteration = 1
         while True:
-            table.add_row([iteration, *[f'{value:.{self.accuracy+1}f}' for value in self.solution]])
+            table.add_row([iteration, *[f'{value:.{self.accuracy + 1}f}' for value in self.solution]])
 
             for i in range(n):
                 _sum = 0
@@ -52,8 +49,8 @@ class JacobiMethod:
                 _sum += self.const_vector[i]
                 x_new[i] = _sum / self.coeff_matrix[i][i]
 
-            if max(abs(np.array(self.solution)-np.array(x_new))) < self.upper_limiting_error:
-                table.add_row([iteration+1, *[f'{value:.{self.accuracy+1}f}' for value in x_new]])
+            if max(abs(np.array(self.solution) - np.array(x_new))) < self.upper_limiting_error:
+                table.add_row([iteration+1, *[f'{value:.{self.accuracy + 1}f}' for value in x_new]])
                 break
 
             self.solution = [round(x, self.accuracy+1) for x in x_new]
@@ -61,11 +58,3 @@ class JacobiMethod:
 
         print(table)
         print('\nRequired Root : ', [f'{round(value, self.accuracy):.{self.accuracy}f}' for value in x_new])
-# A = [[2, -1, 0],
-#      [-1, 3, -1],
-#      [0, -1, 2]]
-
-# b = [1, 8, -5]
-
-# jm = JacobiMethod(A, b)
-# jm.calculate()
